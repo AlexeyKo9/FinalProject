@@ -10,23 +10,20 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 @RestControllerAdvice
 public class ServiceHandler extends ResponseEntityExceptionHandler {
     @ExceptionHandler(EntityNotFoundException.class)
-    public ResponseEntity<ErrorResponse> notFound(EntityNotFoundException ex) {
-        return new ResponseEntity<>(ErrorResponse.builder()
-                .code("Ошибка при выполнении операции (-1)")
-                .message("Пользователь не найден").build(), HttpStatus.OK);
+    public ResponseEntity<ErrorResponse> handleEntityNotFound(EntityNotFoundException ex) {
+        return ResponseEntity.status(HttpStatus.NOT_FOUND)
+                .body(ErrorResponse.builder()
+                        .code("Ошибка при выполнении операции (-1)")
+                        .message("Пользователь не найден")
+                        .build());
     }
 
     @ExceptionHandler(IllegalArgumentException.class)
-    public ResponseEntity<ErrorResponse> insufficientFunds(IllegalArgumentException ex) {
-        return new ResponseEntity<>(ErrorResponse.builder()
-                .code("Недостаточно средств (0)")
-                .message(ex.getMessage()).build(), HttpStatus.OK);
-    }
-
-    @ExceptionHandler(Exception.class)
-    public ResponseEntity<ErrorResponse> errorAddBalance(Exception ex) {
-        return new ResponseEntity<>(ErrorResponse.builder()
-                .code("Ошибка при выполнении операции (0)")
-                .message(ex.getMessage()).build(), HttpStatus.OK);
+    public ResponseEntity<ErrorResponse> handleIllegalArgument(IllegalArgumentException ex) {
+        return ResponseEntity.status(HttpStatus.BAD_REQUEST)
+                .body(ErrorResponse.builder()
+                        .code("Ошибка при выполнении операции (0)")
+                        .message(ex.getMessage())
+                        .build());
     }
 }

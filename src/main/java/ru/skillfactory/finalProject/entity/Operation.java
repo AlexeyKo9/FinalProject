@@ -19,6 +19,8 @@ public class Operation implements Serializable {
     private int id_operation;
     @ManyToOne
     private User user;
+    @ManyToOne
+    private User user_transfer;
     @Column
     private int type_operation;
     @Column

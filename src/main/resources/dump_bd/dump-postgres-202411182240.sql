@@ -2,7 +2,7 @@
 -- PostgreSQL database cluster dump
 --
 
--- Started on 2024-11-17 21:36:19
+-- Started on 2024-11-18 22:40:52
 
 SET default_transaction_read_only = off;
 
@@ -44,7 +44,7 @@ ALTER ROLE postgres WITH SUPERUSER INHERIT CREATEROLE CREATEDB LOGIN REPLICATION
 -- Dumped from database version 17.0
 -- Dumped by pg_dump version 17.0
 
--- Started on 2024-11-17 21:36:19
+-- Started on 2024-11-18 22:40:52
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -58,7 +58,7 @@ SET xmloption = content;
 SET client_min_messages = warning;
 SET row_security = off;
 
--- Completed on 2024-11-17 21:36:19
+-- Completed on 2024-11-18 22:40:52
 
 --
 -- PostgreSQL database dump complete
@@ -77,7 +77,7 @@ SET row_security = off;
 -- Dumped from database version 17.0
 -- Dumped by pg_dump version 17.0
 
--- Started on 2024-11-17 21:36:19
+-- Started on 2024-11-18 22:40:52
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -106,7 +106,7 @@ SET default_tablespace = '';
 SET default_table_access_method = heap;
 
 --
--- TOC entry 219 (class 1259 OID 33585)
+-- TOC entry 219 (class 1259 OID 35018)
 -- Name: operation; Type: TABLE; Schema: postgres; Owner: postgres
 --
 
@@ -115,14 +115,15 @@ CREATE TABLE postgres.operation (
     id_operation integer NOT NULL,
     type_operation integer,
     time_operation timestamp(6) without time zone,
-    user_id bigint
+    user_id bigint,
+    user_transfer_id bigint
 );
 
 
 ALTER TABLE postgres.operation OWNER TO postgres;
 
 --
--- TOC entry 218 (class 1259 OID 33584)
+-- TOC entry 218 (class 1259 OID 35017)
 -- Name: operation_id_operation_seq; Type: SEQUENCE; Schema: postgres; Owner: postgres
 --
 
@@ -138,7 +139,7 @@ CREATE SEQUENCE postgres.operation_id_operation_seq
 ALTER SEQUENCE postgres.operation_id_operation_seq OWNER TO postgres;
 
 --
--- TOC entry 4910 (class 0 OID 0)
+-- TOC entry 4911 (class 0 OID 0)
 -- Dependencies: 218
 -- Name: operation_id_operation_seq; Type: SEQUENCE OWNED BY; Schema: postgres; Owner: postgres
 --
@@ -147,7 +148,7 @@ ALTER SEQUENCE postgres.operation_id_operation_seq OWNED BY postgres.operation.i
 
 
 --
--- TOC entry 221 (class 1259 OID 33592)
+-- TOC entry 221 (class 1259 OID 35025)
 -- Name: user_balance; Type: TABLE; Schema: postgres; Owner: postgres
 --
 
@@ -160,7 +161,7 @@ CREATE TABLE postgres.user_balance (
 ALTER TABLE postgres.user_balance OWNER TO postgres;
 
 --
--- TOC entry 220 (class 1259 OID 33591)
+-- TOC entry 220 (class 1259 OID 35024)
 -- Name: user_balance_id_seq; Type: SEQUENCE; Schema: postgres; Owner: postgres
 --
 
@@ -175,7 +176,7 @@ CREATE SEQUENCE postgres.user_balance_id_seq
 ALTER SEQUENCE postgres.user_balance_id_seq OWNER TO postgres;
 
 --
--- TOC entry 4911 (class 0 OID 0)
+-- TOC entry 4912 (class 0 OID 0)
 -- Dependencies: 220
 -- Name: user_balance_id_seq; Type: SEQUENCE OWNED BY; Schema: postgres; Owner: postgres
 --
@@ -199,7 +200,7 @@ CREATE SEQUENCE postgres.user_balance_seq
 ALTER SEQUENCE postgres.user_balance_seq OWNER TO postgres;
 
 --
--- TOC entry 4748 (class 2604 OID 33588)
+-- TOC entry 4748 (class 2604 OID 35021)
 -- Name: operation id_operation; Type: DEFAULT; Schema: postgres; Owner: postgres
 --
 
@@ -207,7 +208,7 @@ ALTER TABLE ONLY postgres.operation ALTER COLUMN id_operation SET DEFAULT nextva
 
 
 --
--- TOC entry 4749 (class 2604 OID 33595)
+-- TOC entry 4749 (class 2604 OID 35028)
 -- Name: user_balance id; Type: DEFAULT; Schema: postgres; Owner: postgres
 --
 
@@ -215,51 +216,59 @@ ALTER TABLE ONLY postgres.user_balance ALTER COLUMN id SET DEFAULT nextval('post
 
 
 --
--- TOC entry 4902 (class 0 OID 33585)
+-- TOC entry 4903 (class 0 OID 35018)
 -- Dependencies: 219
 -- Data for Name: operation; Type: TABLE DATA; Schema: postgres; Owner: postgres
 --
 
-COPY postgres.operation (amount, id_operation, type_operation, time_operation, user_id) FROM stdin;
-200.00	1	2	2024-11-17 21:30:57.327593	3
-800.00	2	1	2024-11-17 21:31:09.643895	3
-800.00	3	1	2024-11-17 21:31:11.895031	3
+COPY postgres.operation (amount, id_operation, type_operation, time_operation, user_id, user_transfer_id) FROM stdin;
+300.00	1	1	2024-11-18 22:39:50.99675	1	\N
+300.00	2	2	2024-11-18 22:39:51.089842	1	\N
+100.00	3	3	2024-11-18 22:39:51.121434	1	2
+100.00	4	4	2024-11-18 22:39:51.121434	2	1
 \.
 
 
 --
--- TOC entry 4904 (class 0 OID 33592)
+-- TOC entry 4905 (class 0 OID 35025)
 -- Dependencies: 221
 -- Data for Name: user_balance; Type: TABLE DATA; Schema: postgres; Owner: postgres
 --
 
 COPY postgres.user_balance (balance, id) FROM stdin;
-1000.00	1
-3000.00	2
-3600.00	3
+500.00	3
+0.00	4
+500.00	5
+0.00	6
+500.00	7
+0.00	8
+400.00	1
+100.00	2
+500.00	9
+0.00	10
 \.
 
 
 --
--- TOC entry 4912 (class 0 OID 0)
+-- TOC entry 4913 (class 0 OID 0)
 -- Dependencies: 218
 -- Name: operation_id_operation_seq; Type: SEQUENCE SET; Schema: postgres; Owner: postgres
 --
 
-SELECT pg_catalog.setval('postgres.operation_id_operation_seq', 3, true);
-
-
---
--- TOC entry 4913 (class 0 OID 0)
--- Dependencies: 220
--- Name: user_balance_id_seq; Type: SEQUENCE SET; Schema: postgres; Owner: postgres
---
-
-SELECT pg_catalog.setval('postgres.user_balance_id_seq', 3, true);
+SELECT pg_catalog.setval('postgres.operation_id_operation_seq', 4, true);
 
 
 --
 -- TOC entry 4914 (class 0 OID 0)
+-- Dependencies: 220
+-- Name: user_balance_id_seq; Type: SEQUENCE SET; Schema: postgres; Owner: postgres
+--
+
+SELECT pg_catalog.setval('postgres.user_balance_id_seq', 10, true);
+
+
+--
+-- TOC entry 4915 (class 0 OID 0)
 -- Dependencies: 217
 -- Name: user_balance_seq; Type: SEQUENCE SET; Schema: postgres; Owner: postgres
 --
@@ -268,7 +277,7 @@ SELECT pg_catalog.setval('postgres.user_balance_seq', 51, true);
 
 
 --
--- TOC entry 4751 (class 2606 OID 33590)
+-- TOC entry 4751 (class 2606 OID 35023)
 -- Name: operation operation_pkey; Type: CONSTRAINT; Schema: postgres; Owner: postgres
 --
 
@@ -277,7 +286,7 @@ ALTER TABLE ONLY postgres.operation
 
 
 --
--- TOC entry 4753 (class 2606 OID 33597)
+-- TOC entry 4753 (class 2606 OID 35030)
 -- Name: user_balance user_balance_pkey; Type: CONSTRAINT; Schema: postgres; Owner: postgres
 --
 
@@ -286,7 +295,7 @@ ALTER TABLE ONLY postgres.user_balance
 
 
 --
--- TOC entry 4754 (class 2606 OID 33598)
+-- TOC entry 4754 (class 2606 OID 35031)
 -- Name: operation fk4l8pb9ad84dcgbn3s4kd95j3k; Type: FK CONSTRAINT; Schema: postgres; Owner: postgres
 --
 
@@ -294,7 +303,16 @@ ALTER TABLE ONLY postgres.operation
     ADD CONSTRAINT fk4l8pb9ad84dcgbn3s4kd95j3k FOREIGN KEY (user_id) REFERENCES postgres.user_balance(id);
 
 
--- Completed on 2024-11-17 21:36:19
+--
+-- TOC entry 4755 (class 2606 OID 35036)
+-- Name: operation fkgwt83soyfp5y15768av05vt8i; Type: FK CONSTRAINT; Schema: postgres; Owner: postgres
+--
+
+ALTER TABLE ONLY postgres.operation
+    ADD CONSTRAINT fkgwt83soyfp5y15768av05vt8i FOREIGN KEY (user_transfer_id) REFERENCES postgres.user_balance(id);
+
+
+-- Completed on 2024-11-18 22:40:53
 
 --
 -- PostgreSQL database dump complete
@@ -311,7 +329,7 @@ ALTER TABLE ONLY postgres.operation
 -- Dumped from database version 17.0
 -- Dumped by pg_dump version 17.0
 
--- Started on 2024-11-17 21:36:19
+-- Started on 2024-11-18 22:40:53
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -607,13 +625,13 @@ ALTER TABLE ONLY postgres.user_balance
     ADD CONSTRAINT user_balance_pkey PRIMARY KEY (id);
 
 
--- Completed on 2024-11-17 21:36:20
+-- Completed on 2024-11-18 22:40:53
 
 --
 -- PostgreSQL database dump complete
 --
 
--- Completed on 2024-11-17 21:36:20
+-- Completed on 2024-11-18 22:40:53
 
 --
 -- PostgreSQL database cluster dump complete
